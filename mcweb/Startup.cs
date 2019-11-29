@@ -42,6 +42,7 @@ namespace mcweb
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseDirectoryBrowser();
 
             app.UseRouting();
 
