@@ -1,7 +1,7 @@
 # Don't forget to az login
 # Also will need a deployment user set
 
-$RESOURCE_GROUP = "trg-azminicran"
+$RESOURCE_GROUP = az group list --query "[?ends_with( name, 'mcdemo')].{name:name}" -o tsv
 
 $appname = (az webapp list -g $RESOURCE_GROUP --query '[].{Name:name}' -o tsv)
 $GIT_URL = az webapp deployment list-publishing-credentials -n $appname -g $RESOURCE_GROUP --query scmUri -o tsv
