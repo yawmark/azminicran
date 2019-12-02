@@ -10,7 +10,7 @@ New-AzResourceGroup -Name $RESOURCE_GROUP -Location $LOCATION -Verbose
 
 $suffix = $(Get-Random -Minimum 10000 -Maximum 99999)
 
-$staccname = "$PNAMEstacc$suffix"
+$staccname = "${PNAME}stacc$suffix"
 Write-Host "`nCreating a new storage account: $staccname ... (2/?)`n`n"
 New-AzStorageAccount `
    -ResourceGroupName $RESOURCE_GROUP `
@@ -18,7 +18,7 @@ New-AzStorageAccount `
    -Name $staccname `
    -SkuName Standard_LRS
 
-$stsharname = "$PNAMEshare$suffix"
+$stsharname = "${PNAME}share$suffix"
 Write-Host "`nCreating a new storage share: $stsharname ... (3/?)`n`n"
 $stacckey = (Get-AzStorageAccountKey `
     -ResourceGroupName $RESOURCE_GROUP `
@@ -34,7 +34,7 @@ Set-AzStorageShareQuota `
     -Quota 250 `
     -Context $stctx
 
-$aspname = "$PNAMEasp$suffix"
+$aspname = "${PNAME}asp$suffix"
 Write-Host "`nCreating a new app service plan: $aspname ... (4/?)`n`n" 
 New-AzAppServicePlan `
     -Name $aspname `
@@ -42,11 +42,11 @@ New-AzAppServicePlan `
     -Location $LOCATION `
     -Tier Free
 
-$webappname = "$PNAMEweb$suffix"
+$webappname = "${PNAME}web$suffix"
 Write-Host "`nCreating a new web app: $webappname ... (5/?)`n`n"
 New-AzWebApp `
     -Name $webappname `
     -ResourceGroupName $RESOURCE_GROUP `
     -Location $LOCATION `
-    -AppServicePlan $aspname
-
+    -AppServicePlan $aspname `
+    -GitRepositoryPath mcweb
