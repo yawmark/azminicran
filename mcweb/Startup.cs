@@ -17,20 +17,8 @@ namespace mcweb
         #region snippet_ConfigureMethod
         public void Configure(IApplicationBuilder app)
         {
-            // app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseDirectoryBrowser();
-            // app.UseDirectoryBrowser(new DirectoryBrowserOptions
-            // {
-            //     FileProvider = new PhysicalFileProvider(
-            //         Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images")),
-            //         RequestPath = "/MyImages"
-            // });
-
-            // app.Run(async (context) =>
-            // {
-            //     await context.Response.WriteAsync("Hello World!");
-            // });
         }
         #endregion
     }
