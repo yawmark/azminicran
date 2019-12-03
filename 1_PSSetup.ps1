@@ -26,3 +26,10 @@ az appservice plan create -n $aspname -g $RESOURCE_GROUP -l $LOCATION --sku FREE
 $webappname = "${PNAME}web$suffix"
 Write-Host "`nCreating a new web app: $webappname ... (5/?)`n`n"
 az webapp create -n $webappname -p $aspname -g $RESOURCE_GROUP --runtime "DOTNETCORE|2.2" --deployment-local-git
+
+Write-Host "`nDeploying local git ... (5/?)`n`n"
+$GIT_URL = az webapp deployment list-publishing-credentials -n $webappname -g $RESOURCE_GROUP --query scmUri -o tsv
+$REMOTE_NAME = "azure"
+$gitcmd = If (git remote | Select-String $REMOTE_NAME) { "set-url" } Else { "add" }
+git remote $gitcmd $REMOTE_NAME $GIT_URL 
+git push azure master
