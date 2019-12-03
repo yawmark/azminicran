@@ -23,11 +23,6 @@ $aspname = "${PNAME}asp$suffix"
 Write-Host "`nCreating a new app service plan: $aspname ... (4/?)`n`n" 
 az appservice plan create -n $aspname -g $RESOURCE_GROUP -l $LOCATION --sku FREE --is-linux
 
-# $webappname = "${PNAME}web$suffix"
-# Write-Host "`nCreating a new web app: $webappname ... (5/?)`n`n"
-# New-AzWebApp `
-#     -Name $webappname `
-#     -ResourceGroupName $RESOURCE_GROUP `
-#     -Location $LOCATION `
-#     -AppServicePlan $aspname `
-#     -GitRepositoryPath mcweb
+$webappname = "${PNAME}web$suffix"
+Write-Host "`nCreating a new web app: $webappname ... (5/?)`n`n"
+az webapp create -n $webappname -p $aspname -g $RESOURCE_GROUP --runtime "DOTNETCORE|2.2" --deployment-local-git
