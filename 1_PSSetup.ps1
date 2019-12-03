@@ -19,13 +19,9 @@ Write-Host "`nCreating a new storage share: $stsharname ... (3/?)`n`n"
 $stacckey = az storage account keys list --account-name $staccname --query "[?keyName=='key1'].{value:value}" -o tsv
 az storage share create -n $stsharname --account-name $staccname --account-key $stacckey --quota 250 --verbose
 
-# $aspname = "${PNAME}asp$suffix"
-# Write-Host "`nCreating a new app service plan: $aspname ... (4/?)`n`n" 
-# New-AzAppServicePlan `
-#     -Name $aspname `
-#     -ResourceGroupName $RESOURCE_GROUP `
-#     -Location $LOCATION `
-#     -Tier Free
+$aspname = "${PNAME}asp$suffix"
+Write-Host "`nCreating a new app service plan: $aspname ... (4/?)`n`n" 
+az appservice plan create -n $aspname -g $RESOURCE_GROUP -l $LOCATION --sku FREE --is-linux
 
 # $webappname = "${PNAME}web$suffix"
 # Write-Host "`nCreating a new web app: $webappname ... (5/?)`n`n"
