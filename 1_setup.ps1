@@ -40,3 +40,5 @@ git push azure master
 
 Write-Host "`nMapping Azure file share ... (5/?)`n`n"
 az webapp config storage-account add -g $RESOURCE_GROUP -n $webappname --access-key $stacckey --account-name $staccname --custom-id "web${stsharname}" --share-name $stsharname --storage-type AzureFiles --mount-path /home/site/wwwroot/wwwroot
+
+
