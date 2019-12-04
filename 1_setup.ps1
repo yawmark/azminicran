@@ -25,7 +25,7 @@ az appservice plan create -n $aspname -g $RESOURCE_GROUP -l $LOCATION --sku FREE
 
 $webappname = "${PNAME}web$suffix"
 Write-Host "`nCreating a new web app: $webappname ... (5/?)`n`n"
-az webapp create -n $webappname -p $aspname -g $RESOURCE_GROUP --runtime "DOTNETCORE|2.2" # --deployment-local-git
+az webapp create -n $webappname -p $aspname -g $RESOURCE_GROUP --runtime '"DOTNETCORE|2.2"' # --deployment-local-git
 
 Write-Host "`nDeploying local git ... (5/?)`n`n"
 $DEP_USER = "${PNAME}gituser$(Get-Random -Minimum 10000 -Maximum 99999)"
