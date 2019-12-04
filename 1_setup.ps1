@@ -1,4 +1,4 @@
-# Don't forget to Connect-AzAccount
+# Don't forget to az login
 # Script requires dotnet-sdk to be installed
 
 $PNAME = "mcdemo"
@@ -25,10 +25,14 @@ az appservice plan create -n $aspname -g $RESOURCE_GROUP -l $LOCATION --sku FREE
 
 $webappname = "${PNAME}web$suffix"
 Write-Host "`nCreating a new web app: $webappname ... (5/?)`n`n"
-az webapp create -n $webappname -p $aspname -g $RESOURCE_GROUP --runtime "DOTNETCORE|2.2" --deployment-local-git
+az webapp create -n $webappname -p $aspname -g $RESOURCE_GROUP --runtime "DOTNETCORE|2.2" # --deployment-local-git
 
 Write-Host "`nDeploying local git ... (5/?)`n`n"
-$GIT_URL = az webapp deployment list-publishing-credentials -n $webappname -g $RESOURCE_GROUP --query scmUri -o tsv
+$DEP_USER = "${PNAME}gituser"
+$DEP_PW = "${PNAME}$(Get-Random)"
+az webapp deployment user set --user-name $DEP_USER --password $DEP_PW
+az webapp deployment source config-local-git --name $webappname --resource-group $RESOURCE_GROUP
+$GIT_URL = "https://${DEP_USER}:${DEP_PW}@${webappname}.scm.azurewebsites.net/${webappname}.git"
 $REMOTE_NAME = "azure"
 $gitcmd = If (git remote | Select-String $REMOTE_NAME) { "set-url" } Else { "add" }
 git remote $gitcmd $REMOTE_NAME $GIT_URL 
